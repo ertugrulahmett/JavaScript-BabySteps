@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr-TR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript</title>
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            width: 300px;
+            margin: 50px auto;
+            background-color: #FFF;
+            text-align: center;
+            font-size: 22px;
+            padding: 20px;
+            border-radius: 3px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+        }
+
+        .generator-button {
+            padding: 10px 15px;
+            background-color: rgb(58, 117, 168);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 22px;
+        }
+
+        .color-container {
+            width: 80vw;
+            height: auto;
+            margin: 20px auto;
+            background-color: #fafafa;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .color {
+            width: 150px;
+            height: 150px;
+            padding: 50px 5px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .color-name {
+            padding: 5px;
+            text-align: center;
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <button id="change" class="generator-button">New Colors</button>
+    </div>
+
+    <div class="color-container"></div>
+
+    <script>
+
+        var change = document.querySelector("#change"),
+            container = document.querySelector(".container"),
+            colorDiv = document.querySelector(".color-container");
+
+        change.addEventListener("click", getColors);
+
+        document.body.onload = getColors();
+
+        function getColors() {
+
+            var inner = "";
+
+            for (let i = 0; i < 45; i++) {
+
+                var color = `rgb(${generateColor()}, ${generateColor()}, ${generateColor()})`;
+
+                inner += `<div class="color" style="background-color: ${color};"><div class="color-name">${color}</div></div>`;
+
+            }
+
+            colorDiv.innerHTML = inner;
+        }
+
+        function generateColor() {
+            return Math.round(Math.random() * 255);
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr-TR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript</title>
+</head>
+
+<body>
+
+    <input type="number" id="rows">
+    <input type="number" id="colls">
+    <button id="create">Tablo Oluştur</button>
+    <hr>
+
+    <div id="tableContainer">
+
+    </div>
+
+    <script type="text/javascript">
+
+        create.onclick = function () {
+
+            var rows = document.getElementById("rows").value,
+                colls = document.getElementById("colls").value,
+                create = document.getElementById("create"),
+                tableContainer = document.getElementById("tableContainer"),
+                counter = 0;
+
+            var table = document.createElement("table");
+            table.border = 1; table.cellPadding = 5; table.align = "center";
+
+            for (var i = 0; i < rows; i++) {
+                var tr = document.createElement("tr");
+                table.appendChild(tr);
+
+                for (var j = 0; j < colls; j++) {
+                    var td = document.createElement("td");
+                    tr.appendChild(td);
+                    td.innerHTML = ++counter;
+                }
+            }
+            tableContainer.innerHTML = "";
+            tableContainer.appendChild(table);
+
+        };
+
+    </script>
+
+</body>
+
+</html>

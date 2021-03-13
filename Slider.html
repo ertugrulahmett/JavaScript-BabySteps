@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JavaScript Slider</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #272727;
+        }
+
+        .main {
+            width: 1200px;
+            height: 650px;
+            margin: 50px auto;
+            position: relative;
+        }
+
+        #slideUst {
+            margin-bottom: -3px;
+            cursor: pointer;
+        }
+
+        #slideAlt {
+            height: 49px;
+            background-color: #000;
+            color: white;
+        }
+
+        #slideAlt ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #slideAlt ul li {
+            display: inline-block;
+            width: 40px;
+            height: 49px;
+            text-align: center;
+            font: bold 18px Arial;
+            line-height: 49px;
+            cursor: pointer;
+            transition-duration: 200ms;
+            background-color: #000;
+        }
+
+        #slideAlt ul li:hover {
+            background-color: crimson;
+        }
+    </style>
+</head>
+
+<body onload="basla(1)">
+
+    <div class="main">
+        <img id="slideUst" src="" width="1200" height="600" />
+        <div id="slideAlt">
+            <center>
+                <ul>
+                    <li id="slideNo1" onmouseover="degis(1)" onmouseout="basla(2)">1</li>
+                    <li id="slideNo2" onmouseover="degis(2)" onmouseout="basla(3)">2</li>
+                    <li id="slideNo3" onmouseover="degis(3)" onmouseout="basla(4)">3</li>
+                    <li id="slideNo4" onmouseover="degis(4)" onmouseout="basla(5)">4</li>
+                    <li id="slideNo5" onmouseover="degis(5)" onmouseout="basla(6)">5</li>
+                    <li id="slideNo6" onmouseover="degis(6)" onmouseout="basla(1)">6</li>
+                </ul>
+            </center>
+        </div>
+    </div>
+
+    <script>
+
+        var sliderUst = document.getElementById("slideUst");
+        var zaman, renk = "crimson";
+        var resimler = new Array("",
+            "img/slide1.webp",
+            "img/slide2.webp",
+            "img/slide3.webp",
+            "img/slide4.webp",
+            "img/slide5.webp",
+            "img/slide6.webp"
+        );
+
+        function degis(x) {
+
+            for (let i = 1; i < resimler.length; i++) {
+
+                if (i == x) {
+                    document.getElementById("slideNo" + i).style.background = renk;
+                    sliderUst.src = resimler[x];
+                    sliderUst.setAttribute("onClick", "window.location.href='" + resimler[x] + "'");
+                } else {
+                    document.getElementById("slideNo" + i).style.background = "black";
+                }
+
+            }
+
+            clearInterval(zaman);
+
+        }
+
+        function basla(z) {
+
+            if (z == 1) {
+                sliderUst.src = resimler[z];
+                document.getElementById("slideNo" + z).style.background = renk;
+                document.getElementById("slideNo6").style.background = "black";
+                sliderUst.setAttribute("onClick", "window.location.href='" + resimler[z] + "'");
+                z++;
+            }
+
+            zaman = setInterval(() => {
+
+                sliderUst.src = resimler[z];
+
+                for (let i = 1; i < resimler.length; i++) {
+
+                    if (i == z) {
+                        sliderUst.setAttribute("onClick", "window.location.href='" + resimler[z] + "'");
+                        document.getElementById("slideNo" + i).style.background = renk;
+                    } else {
+                        document.getElementById("slideNo" + i).style.background = "black";
+                    }
+
+                }
+
+                (z == 6) ? z = 1 : z++;
+
+            }, 5000);
+
+        }
+
+    </script>
+
+</body>
+
+</html>

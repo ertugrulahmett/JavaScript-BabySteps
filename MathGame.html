@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="tr-TR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/dist/style.css">
+    <title>Javascript</title>
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #272727;
+            font-family: monospace;
+            font-size: 25px;
+        }
+
+        .container {
+            color: whitesmoke;
+            margin: 50px auto;
+            width: 20em;
+            text-align: center;
+            background-color: #161616;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px teal;
+        }
+
+        .content .numbers,
+        .content .form {
+            display: inline-block;
+        }
+
+        .content .form input {
+            width: 70px;
+            padding: 5px 10px;
+            outline: none;
+            border: none;
+            appearance: textfield;
+        }
+
+        .content .form button {
+            border: 1px solid #000;
+            padding: 5px 10px;
+            cursor: pointer;
+            color: #fff;
+            background-color: #353535;
+        }
+
+        .content .result {
+            padding: 10px;
+        }
+
+        .content .result #trueCounter,
+        .content .result #falseCounter {
+            display: inline-block;
+            padding: 12px;
+            margin: 5px;
+        }
+
+        .content .result #trueCounter {
+            background-color: #27ae60;
+        }
+
+        .content .result #falseCounter {
+            background-color: crimson;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Matematik Oyunu</h1>
+        <div class="content">
+
+            <div class="numbers">
+                <span id="firstNumber">0</span>
+                <span id="operator">+</span>
+                <span id="secondNumber">0</span>
+                <span>=</span>
+            </div>
+            <div class="form">
+                <input id="reply" autofocus type="number">
+                <button id="replyButton">Cevapla</button>
+            </div>
+
+            <div class="result">
+                <span id="trueCounter">0</span>
+                <span id="falseCounter">0</span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        // Değişkenlerin tanımlanması
+        var firstNumber, secondNumber, operator, operators, reply, replyButton, trueCounter, falseCounter, minNumber, maxNumber;
+
+        //Değişkenlere değerlerin atanması
+        firstNumber = document.getElementById("firstNumber");
+        secondNumber = document.getElementById("secondNumber");
+        operator = document.getElementById("operator");
+        reply = document.getElementById("reply");
+        replyButton = document.getElementById("replyButton");
+        trueCounter = document.getElementById("trueCounter");
+        falseCounter = document.getElementById("falseCounter");
+        minNumber = 0;
+        maxNumber = 100;
+        operation = ["+", "-", "*", "/"];
+
+        // Girilen sayılara göre rastgele sayı üretme
+        function getRandomNumber(min, max) {
+            var number = Math.floor(Math.random() * (max - min + 1)) + min;
+            return number;
+        }
+
+        // Yeni soru oluşturma
+        function newQuestion() {
+
+            firstNumber.innerHTML = getRandomNumber(minNumber, maxNumber);
+            operator.innerHTML = operation[getRandomNumber(0, 3)];
+            secondNumber.innerHTML = getRandomNumber(minNumber, maxNumber);
+
+            // Bölme işleminin sonucunun tam çıkması için
+            if (operator.innerHTML == "/") {
+                while (firstNumber.innerHTML % secondNumber.innerHTML != 0)
+                    secondNumber.innerHTML = getRandomNumber(minNumber, maxNumber);
+            }
+            // Çarpma işleminde uçuk sorular olmaması için
+            else if (operator.innerHTML == "*") {
+                while (firstNumber.innerHTML * secondNumber.innerHTML > 500)
+                    secondNumber.innerHTML = getRandomNumber(minNumber, maxNumber);
+            }
+
+            reply.value = "";
+            reply.focus();
+        }
+
+        // Button a yıklandığıda sonuçların kontrol edilmesi
+        replyButton.onclick = function () {
+            var result;
+
+            switch (operator.innerHTML) {
+                case "+":
+                    result = Number(firstNumber.innerHTML) + Number(secondNumber.innerHTML);
+                    break;
+
+                case "-":
+                    result = firstNumber.innerHTML - secondNumber.innerHTML;
+                    break;
+
+                case "*":
+                    result = firstNumber.innerHTML * secondNumber.innerHTML;
+                    break;
+
+                case "/":
+                    result = firstNumber.innerHTML / secondNumber.innerHTML;
+                    break;
+            }
+
+            (result == reply.value) ? trueCounter.innerHTML++ : falseCounter.innerHTML++;;
+
+            newQuestion();
+
+        };
+
+        window.onload = newQuestion();
+
+    </script>
+
+</body>
+
+</html>
